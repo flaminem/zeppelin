@@ -71,3 +71,6 @@ auto-save-list
 tramp
 .\#*
 *.swp
+
+# node files
+node_modules

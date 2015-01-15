@@ -24,7 +24,7 @@ import org.apache.spark.repl.SparkJLineCompletion;
 import org.apache.spark.scheduler.ActiveJob;
 import org.apache.spark.scheduler.DAGScheduler;
 import org.apache.spark.scheduler.Stage;
-import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.hive.HiveContext;
 import org.apache.spark.ui.jobs.JobProgressListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +72,7 @@ public class SparkInterpreter extends Interpreter {
   private SparkIMain intp;
   private SparkContext sc;
   private ByteArrayOutputStream out;
-  private SQLContext sqlc;
+  private HiveContext sqlc;
   private DependencyResolver dep;
   private SparkJLineCompletion completor;
 
@@ -138,13 +138,13 @@ public class SparkInterpreter extends Interpreter {
     return sc;
   }
 
-  public SQLContext getSQLContext() {
+  public HiveContext getHiveContext() {
     if (sqlc == null) {
       // save / load sc from common share
       Map<String, Object> share = (Map<String, Object>) getProperty().get("share");
-      sqlc = (SQLContext) share.get("sqlc");
+      sqlc = (HiveContext) share.get("sqlc");
       if (sqlc == null) {
-        sqlc = new SQLContext(getSparkContext());
+        sqlc = new HiveContext(getSparkContext());
 
         // The same reason with SparkContext, it'll not be shared, so commenting out.
         // share.put("sqlc", sqlc);
@@ -269,7 +269,7 @@ public class SparkInterpreter extends Interpreter {
     completor = new SparkJLineCompletion(intp);
 
     sc = getSparkContext();
-    sqlc = getSQLContext();
+    sqlc = getHiveContext();
 
     dep = getDependencyResolver();
 
@@ -291,7 +291,7 @@ public class SparkInterpreter extends Interpreter {
     intp.interpret("@transient val sc = "
                  + "_binder.get(\"sc\").asInstanceOf[org.apache.spark.SparkContext]");
     intp.interpret("@transient val sqlc = "
-                 + "_binder.get(\"sqlc\").asInstanceOf[org.apache.spark.sql.SQLContext]");
+                 + "_binder.get(\"sqlc\").asInstanceOf[org.apache.spark.sql.hive.HiveContext]");
     intp.interpret("import org.apache.spark.SparkContext._");
     intp.interpret("import sqlc._");
   }

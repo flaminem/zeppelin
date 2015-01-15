@@ -99,9 +99,11 @@ if [[ ! -z "${HADOOP_HOME}" ]] && [[ -d "${HADOOP_HOME}" ]]; then
   addJarInDir "${HADOOP_HOME}"
 fi
 
+# fpin fix
+
 export ZEPPELIN_CLASSPATH
 export SPARK_CLASSPATH+=":${ZEPPELIN_CLASSPATH}"
-export CLASSPATH+=":${ZEPPELIN_CLASSPATH}"
+export CLASSPATH+=":${ZEPPELIN_CLASSPATH}:/etc/hive/conf"
 
 # Text encoding for 
 # read/write job into files,

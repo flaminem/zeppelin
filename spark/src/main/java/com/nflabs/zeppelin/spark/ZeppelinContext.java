@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.util.Iterator;
 
 import org.apache.spark.SparkContext;
-import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.hive.HiveContext;
 import org.apache.spark.sql.SchemaRDD;
 
 import scala.Tuple2;
@@ -28,7 +28,7 @@ public class ZeppelinContext {
   private NoteInterpreterLoader noteInterpreterLoader;
   private PrintStream out;
 
-  public ZeppelinContext(SparkContext sc, SQLContext sql, DependencyResolver dep,
+  public ZeppelinContext(SparkContext sc, HiveContext sql, DependencyResolver dep,
       NoteInterpreterLoader noteInterpreterLoader, PrintStream printStream) {
     this.sc = sc;
     this.sqlContext = sql;
@@ -38,7 +38,7 @@ public class ZeppelinContext {
   }
 
   public SparkContext sc;
-  public SQLContext sqlContext;
+  public HiveContext sqlContext;
   private Setting form;
 
   public SchemaRDD sql(String sql) {

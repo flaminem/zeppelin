@@ -20,6 +20,14 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>zeppelin-zengine</artifactId>
       <version>${project.version}</version>
+      <exclusions>
+        <!-- fix fpin -->
+        <exclusion>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
+
     </dependency>
 
     <dependency>
@@ -182,6 +190,13 @@
       <version>${gson.version}</version>
     </dependency>
 
+<!-- fix fpin-->
+<dependency>
+	<groupId>com.google.guava</groupId>
+	<artifactId>guava</artifactId>
+	<version>14.0.1</version>
+</dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -225,6 +240,11 @@
         <exclusion>
           <groupId>xml-apis</groupId>
           <artifactId>xml-apis</artifactId>
+        </exclusion>
+	<!-- fix fpin -->
+        <exclusion>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

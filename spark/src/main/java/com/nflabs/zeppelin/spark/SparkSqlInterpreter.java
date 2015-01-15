@@ -11,7 +11,7 @@ import org.apache.spark.SparkContext;
 import org.apache.spark.scheduler.ActiveJob;
 import org.apache.spark.scheduler.DAGScheduler;
 import org.apache.spark.scheduler.Stage;
-import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.hive.HiveContext;
 import org.apache.spark.sql.SchemaRDD;
 import org.apache.spark.sql.catalyst.expressions.Attribute;
 import org.apache.spark.sql.catalyst.expressions.Row;
@@ -75,7 +75,7 @@ public class SparkSqlInterpreter extends Interpreter {
 
   @Override
   public InterpreterResult interpret(String st) {
-    SQLContext sqlc = getSparkInterpreter().getSQLContext();
+    HiveContext sqlc = getSparkInterpreter().getHiveContext();
     SparkContext sc = sqlc.sparkContext();
     sc.setJobGroup(jobGroup, "Zeppelin", false);
     SchemaRDD rdd;
@@ -133,7 +133,7 @@ public class SparkSqlInterpreter extends Interpreter {
 
   @Override
   public void cancel() {
-    SQLContext sqlc = getSparkInterpreter().getSQLContext();
+    HiveContext sqlc = getSparkInterpreter().getHiveContext();
     SparkContext sc = sqlc.sparkContext();
 
     sc.cancelJobGroup(jobGroup);
@@ -151,7 +151,7 @@ public class SparkSqlInterpreter extends Interpreter {
 
 
   public int getProgress() {
-    SQLContext sqlc = getSparkInterpreter().getSQLContext();
+    HiveContext sqlc = getSparkInterpreter().getHiveContext();
     SparkContext sc = sqlc.sparkContext();
     JobProgressListener sparkListener = getSparkInterpreter().getJobProgressListener();
     int completedTasks = 0;

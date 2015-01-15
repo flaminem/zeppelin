@@ -67,6 +67,8 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
+	<!-- fpin fix-->
+	<version>14.0.1</version>
     </dependency>
             
     <dependency>
